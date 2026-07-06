@@ -1,5 +1,9 @@
 import User from "../models/user.model.js";
-import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+
+
 
 
 export const register = async (req, res) => {
@@ -39,5 +43,44 @@ export const register = async (req, res) => {
 
     }catch(err){
         res.status(500).json({message: "ServerSide Error: " + err.message});
+    }
+}
+
+
+//login
+export const login = async (req, res) => {
+    try{
+        const {email, phone_no, password}  = req.body
+
+        const identifier = email || phone_no;
+
+       if(!identifier || !password){
+           return res.status(400).json({error: "Please enter all the required fields"});
+       }
+
+       const user = await User.findOne(email ? {email} : {phone_no});
+
+
+       if(!user)
+           return res.status(400).json({error: "User not found"});
+
+       const isMatch = await user.comparePassword(password);
+
+       if(!isMatch)
+           return res.status(400).json({error: "Invalid Credentials"});
+
+       const token = jwt.sign({id : user._id}, process.env.JWT_SECRET, {expiresIn: "30d"});
+
+        return res.status(200).json({message : "Login successful",
+            token: token,       
+                                        user : {
+                                             id: user._id,
+                                            fullname : user.fullname,
+                                            email : user.email,
+                                            phone_no : user.phone_no,
+                                        }});
+    }
+    catch(err){
+        res.status(500).json({error: "ServerSide Error: " + err.message});
     }
 }
