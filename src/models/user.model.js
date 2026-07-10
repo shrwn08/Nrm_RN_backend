@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        lowercase: true,
         unique: true,
     },
     phone_no : {
@@ -47,7 +48,7 @@ userSchema.pre('save', async function (next){
 })
 
 
-userSchema.method.comparePassword = async function(password){
+userSchema.methods.comparePassword = async function(password){
     try{
         const isMatch = await bcrypt.compare(password, this.password);
         return isMatch;
