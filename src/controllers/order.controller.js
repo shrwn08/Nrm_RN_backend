@@ -40,3 +40,25 @@ export const createOrder = async (req, res) => {
 
     }
 }
+
+
+//Get /api/order?status=pending
+
+export const getOrders = async (req, res) =>{
+    try{
+        const {status} = req.query;
+        const filter = {createdBy : req.user._id};
+
+        if(status){
+            filter.status = status;
+        }
+
+        const orders = await Order.find(filter).sort({createdAt : -1});
+        return res.status(200).json(orders);
+
+
+
+    }catch (e) {
+        return res.status(500).json({message : "Failed to fetch orders", error : e.message});
+    }
+}
