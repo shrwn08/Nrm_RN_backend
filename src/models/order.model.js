@@ -8,14 +8,46 @@ const rodLineSchema = new mongoose.Schema({
         required : true,
         enum : ["8mm", "12mm", "16mm", "20mm", "24mm"],
     },
-    quantity  {
+    quantity : {
         type : Number,
         required : true,
         min : [0.1, "Quantity must be greater than 0."],
     }
 },{
     _id: false
-})
+});
+
+const shippingAdreesSnapshotSchema = new mongoose.Schema({
+    address : {
+        type : String,
+        required : true,
+        trim : true,
+    },
+    city : {
+        type : String,
+        required : [true, "City is required"],
+        trim: true,
+    },
+    district : {
+        type : String,
+        required : [ true, "District is required"],
+        trim: true,
+    },
+    state : {
+        type : String,
+        required : [ true, "State is required"],
+        trim: true,
+    },
+    pincode : {
+        type : String,
+        required : [ true, "Pincode is required"],
+        trim: true,
+        validate : {
+            validator : value => /^[0-9][0-9]{5}$/.test(value),
+            message : "enter a valid 6- digit pincode"
+        }
+    }
+},{id : false });
 
 const orderSchema = new mongoose.Schema(
     {
@@ -26,7 +58,7 @@ const orderSchema = new mongoose.Schema(
         },
         rod_type : {
             type : String,
-            required : [true, "Company name is required"],
+            required : [true, "Rod type is required"],
             enum : ["Jindal" , "Rathi"]
         },
         rodLines : {
@@ -52,6 +84,11 @@ const orderSchema = new mongoose.Schema(
         shippingAddress :  {
             type: String,
             enum : ["pending", "confirmed", "dispatched", "delivered", "canceled"],
+            default: "pending",
+        },
+        status : {
+            type : String,
+            enum : ["pending", "confirmed", "dispatched", "delivered", "cancelled"],
             default: "pending",
         },
         createdBy : {
