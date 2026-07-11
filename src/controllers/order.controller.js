@@ -62,3 +62,19 @@ export const getOrders = async (req, res) =>{
         return res.status(500).json({message : "Failed to fetch orders", error : e.message});
     }
 }
+
+
+//GET /api/orders/:id
+
+export const getOrderById = async (req, res) => {
+    try{
+        const order = await Order.findOne({_id: req.params.id, createdBy : req.user._id});
+
+        if(!order){
+            return res.status(404).json({message : "order not found"})
+        }
+        return res.status(200).json(order);
+    }catch (e) {
+        return res.status(500).json({message : "Failed to fetch orders", error : e.message});
+    }
+}
