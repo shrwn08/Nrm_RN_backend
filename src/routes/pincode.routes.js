@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(protect);
 
 
-router.get("/:pincode", (req, res) => console.log("lookPincode"));
+router.get("/:pincode", lookupPincode);
 
 
 

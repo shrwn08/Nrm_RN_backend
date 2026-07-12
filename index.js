@@ -5,8 +5,11 @@ import cors from "cors";
 import orderRoutes from "./src/routes/order.routes.js";
 import pincodeRoutes  from "./src/routes/pincode.routes.js";
 import addressRoutes from "./src/routes/address.routes.js";
+import dotenv from "dotenv";
 
-const PORT = 3000;
+dotenv.config();
+
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
@@ -15,11 +18,12 @@ app.use(cors({"origin": "*"}))
 
 app.get("/health-check", (req, res) => {
     console.log("Route is working");
+    res.status(200).json({ status: "ok" });
 })
 connectDb();
 
 app.use("/api", userRoutes);
-app.use("api/order", orderRoutes);
+app.use("api/orders", orderRoutes);
 app.use("/api/pincode", pincodeRoutes)
 app.use("/api/address", addressRoutes)
 

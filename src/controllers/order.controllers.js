@@ -5,9 +5,9 @@ import Order from "./models/Order";
 
 export const createOrder = async (req, res) => {
     try{
-        const {party, rod_type, rodLines, truck, shippingAddress} = req.body;
+        const {party, rodType, rodLines, truck, shippingAddress} = req.body;
 
-        if(!party || !rod_type || !shippingAddress ){
+        if(!party || !rodType || !shippingAddress ){
             return res.status(400).json({
                 message : "party, rod type and shipping Address are required"
             })
@@ -21,7 +21,7 @@ export const createOrder = async (req, res) => {
 
         const order = new Order({
             party,
-            rod_type,
+            rodType,
             rodLines,
             truck,
             shippingAddress,

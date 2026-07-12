@@ -18,7 +18,7 @@ const rodLineSchema = new mongoose.Schema({
 });
 
 const shippingAdreesSnapshotSchema = new mongoose.Schema({
-    address : {
+    addressLine : {
         type : String,
         required : true,
         trim : true,
@@ -56,7 +56,7 @@ const orderSchema = new mongoose.Schema(
             required : [true, "Party name is required"],
             trim : true
         },
-        rod_type : {
+        rodType : {
             type : String,
             required : [true, "Rod type is required"],
             enum : ["Jindal" , "Rathi"]
@@ -72,7 +72,6 @@ const orderSchema = new mongoose.Schema(
         truck : {
             number: {
                 type: "String",
-                required: true,
                 trim: true,
                 uppercase: true,
             },
@@ -83,8 +82,7 @@ const orderSchema = new mongoose.Schema(
         },
         shippingAddress :  {
             type: String,
-            enum : ["pending", "confirmed", "dispatched", "delivered", "canceled"],
-            default: "pending",
+            required : [true , "Shipping address is required"],
         },
         status : {
             type : String,

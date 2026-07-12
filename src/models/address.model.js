@@ -24,10 +24,17 @@ const addressSchema = new mongoose.Schema({
         type : String,
         required : [true, "State is required"],
         trim: true,
-        validate : {
-            validator : value => /^[1-9][0-9]{5}$/.test(value),
-            message : "Please enter a valid 6-digit pincode"
-        }
+    },
+    pincode : {
+      type : String,
+      required : [true, "Pincode is required"],
+      trim: true,
+      validate : {
+          validator : {
+              validator : value => /^[1-9][0-9]{5}$/.test(value),
+              message : "Please enter a valid 6- digit pincode"
+          }
+      }
     },
     party : {
 
