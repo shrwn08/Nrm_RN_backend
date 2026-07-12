@@ -78,3 +78,27 @@ export const getOrderById = async (req, res) => {
         return res.status(500).json({message : "Failed to fetch orders", error : e.message});
     }
 }
+
+//patch /api/orders/:id/status
+
+export const updateOrderStatus = async (req, res) => {
+    try{
+        const {status} = req.body;
+
+        const allowedStatuses = ["pending", "confirmed", "dispatched", "dispatched", "delivered", "cancelled"];
+
+        if(!allowedStatuses.includes(status)){
+            return res.status(400).json({message : "Invalid status value"});
+        }
+
+        const order = await Order.findOneAndUpdate({_id: req.params.id, createdBy : req.user._id}, {status}, {new: true, runValidators: true});
+
+        if(!order){
+            return res.status(404).json({message : "Order not found"})
+        }
+
+        return res.status(200).json(order);
+    }catch (e) {
+        return res.status(500).json({message : "Failed to update order status", error : e.message});
+    }
+}

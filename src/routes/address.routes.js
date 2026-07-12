@@ -9,6 +9,7 @@ router.use(protect);
 router.post("/", ()=>console.log("createAddress"));
 router.get("/", ()=>console.log("getAddress"));
 router.delete("/:id", ()=>console.log("deleteAddress"));
+router.patch("/:id/status", ()=> console.log("patchAddress"));
 
 
 
