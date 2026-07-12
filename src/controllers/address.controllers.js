@@ -57,3 +57,21 @@ export const createAddress = async (req, res) => {
         return res.status(500).json({message : " Failed to fetch addresses"})
     }
  }
+
+ //Delete /api/addresses/:id
+export const deleteAddress = async (req, res) => {
+    try{
+        const address = await Address.findOneAndDelete({
+            _id : req.params.id,
+            createdBy : req.user._id
+        });
+
+        if(!address){
+            return res.status(404).json({message : "Address does not exist"});
+        }
+
+        return res.status(200).json({message : "Address deleted successfully"});
+    }catch(err){
+        return res.status(500).json({message : "Failed to delete address"});
+    }
+}
