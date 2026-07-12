@@ -41,3 +41,19 @@ export const createAddress = async (req, res) => {
         return res.status(400).json({message: "Failed to save address"});
     }
 }
+
+
+//Get /api/addresses
+ export const getAddress = async (req, res) => {
+    try{
+        const addresses = await Address.find({createdBy : req.user._id}).sort({
+            isDefault : -1,
+            createdAt : -1,
+        });
+
+        return res.status(200).json({address : addresses});
+
+    }catch(err){
+        return res.status(500).json({message : " Failed to fetch addresses"})
+    }
+ }
