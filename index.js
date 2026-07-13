@@ -3,7 +3,6 @@ import {connectDb} from "./src/db/connection.js";
 import userRoutes from "./src/routes/user.routes.js";
 import cors from "cors";
 import orderRoutes from "./src/routes/order.routes.js";
-import pincodeRoutes  from "./src/routes/pincode.routes.js";
 import addressRoutes from "./src/routes/address.routes.js";
 import dotenv from "dotenv";
 
@@ -21,10 +20,8 @@ app.get("/health-check", (req, res) => {
     res.status(200).json({ status: "ok" });
 })
 connectDb();
-
 app.use("/api", userRoutes);
 app.use("api/orders", orderRoutes);
-app.use("/api/pincode", pincodeRoutes)
 app.use("/api/address", addressRoutes)
 
 app.listen(PORT, "0.0.0.0",() => console.log(`Server listening on port ${PORT}`));
