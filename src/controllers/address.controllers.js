@@ -1,5 +1,4 @@
 import Address from "../models/address.model.js"
-import error from "jsonwebtoken/lib/JsonWebTokenError.js";
 
 //post /api/addresses
 

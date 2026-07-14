@@ -1,5 +1,5 @@
 import express from "express";
-import {protect} from "./middlewares/auth.middlewares.js";
+import {protect} from "../middlewares/auth.middlewares.js";
 import {createAddress, deleteAddress, getAddress} from "../controllers/address.controllers.js";
 
 
