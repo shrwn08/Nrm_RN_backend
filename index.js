@@ -21,7 +21,7 @@ app.get("/health-check", (req, res) => {
 })
 connectDb();
 app.use("/api", userRoutes);
-app.use("api/orders", orderRoutes);
+app.use("/api/orders", orderRoutes);
 app.use("/api/address", addressRoutes)
 
 app.listen(PORT, "0.0.0.0",() => console.log(`Server listening on port ${PORT}`));

@@ -17,6 +17,7 @@ export const getMe = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try{
         const {fullname, city} = req.body;
+        console.log(req.body)
 
         const user = await  User.findById(req.user._id);
 
@@ -62,7 +63,7 @@ export const changePassword = async (req, res) => {
 
         const user = await User.findById(req.user._id);
 
-        const isMatch = await user.comparePassword(newPassword);
+        const isMatch = await user.comparePassword(currentPassword);
 
         if(!isMatch){
             return res.status(200).json({message : "Current password is incorrect"});
@@ -70,6 +71,7 @@ export const changePassword = async (req, res) => {
 
         user.password = newPassword;
         await user.save();
+        return res.status(200).json({message: "Password changed successfully"});
     }catch(e){
         return res.status(500).json({message:"ServerSide error"+ e.message});
     }

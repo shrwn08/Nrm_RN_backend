@@ -75,13 +75,13 @@ const orderSchema = new mongoose.Schema(
                 trim: true,
                 uppercase: true,
             },
-            driveInfo: {
+            driverInfo: {
                 type: String,
                 trim: true,
             }
         },
         shippingAddress :  {
-            type: String,
+            type: shippingAdreesSnapshotSchema,
             required : [true , "Shipping address is required"],
         },
         status : {
